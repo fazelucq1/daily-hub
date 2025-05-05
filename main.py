@@ -1,64 +1,61 @@
-import os
+from flask import Flask, render_template
 import requests
-import argparse
-from rich.console import Console
-from rich.panel import Panel
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-console = Console()
+app = Flask(__name__)
 
-def fetch_weather(api_key, city):
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={api_key}"
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+CITY = "Milan"
+COUNTRY = "it"
+
+def fetch_weather():
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&units=metric&appid={WEATHER_API_KEY}"
     try:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
             main = data['main']
             weather = data['weather'][0]
-            return f"Temperature: {main['temp']}°C\nDescription: {weather['description']}"
-        elif response.status_code == 404:
-            return "City not found."
+            return {
+                'city': CITY,
+                'temperature': main['temp'],
+                'description': weather['description'].capitalize(),
+                'icon': weather['icon']
+            }
         else:
-            return f"Error: {response.status_code}"
+            return {'error': f"Error: {response.status_code}"}
     except Exception as e:
-        return f"Exception: {str(e)}"
+        return {'error': str(e)}
 
-def fetch_news(api_key, country):
-    url = f"https://newsapi.org/v2/top-headlines?country={country}&pageSize=5&apiKey={api_key}"
+def fetch_news():
+    url = f"https://newsapi.org/v2/top-headlines?country={COUNTRY}&pageSize=5&apiKey={NEWS_API_KEY}"
     try:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
             articles = data.get('articles', [])
             if articles:
-                return [f"{article['title']}\n{article['description']}" for article in articles]
+                return [{
+                    'title': article['title'],
+                    'description': article['description'] or "No description available.",
+                    'url': article['url']
+                } for article in articles]
             else:
-                return ["No news available."]
+                return [{'title': "No news available.", 'description': "", 'url': "#"}]
         else:
-            return [f"Error: {response.status_code}"]
+            return [{'title': f"Error: {response.status_code}", 'description': "", 'url': "#"}]
     except Exception as e:
-        return [f"Exception: {str(e)}"]
+        return [{'title': str(e), 'description': "", 'url': "#"}]
 
-def main():
-    parser = argparse.ArgumentParser(description="Smart Home Dashboard")
-    parser.add_argument("--city", default="Rome", help="City for weather")
-    parser.add_argument("--country", default="it", help="Country code for news")
-    args = parser.parse_args()
+@app.route('/')
+def dashboard():
+    weather = fetch_weather()
+    news = fetch_news()
+    return render_template('index.html', weather=weather, news=news)
 
-    weather_api_key = os.getenv("WEATHER_API_KEY")
-    news_api_key = os.getenv("NEWS_API_KEY")
-    if not weather_api_key or not news_api_key:
-        console.print("[red]Please set WEATHER_API_KEY and NEWS_API_KEY in .env file.[/red]")
-        return
-
-    weather = fetch_weather(weather_api_key, args.city)
-    news = fetch_news(news_api_key, args.country)
-
-    console.print(Panel(weather, title=f"Weather in {args.city}", expand=False))
-    for i, item in enumerate(news, 1):
-        console.print(Panel(item, title=f"News {i}", expand=False))
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(debug=True)
