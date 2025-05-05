@@ -1,12 +1,11 @@
 # 🌟 Daily Hub
 
-**Daily Hub** is a lightweight and modern dashboard that brings weather and news directly to your screen, making it perfect for in-home displays or as a daily companion on your computer. Built with Python, it offers a smooth and visually appealing experience, with real-time updates and elegant formatting using the `rich` library.
+**Daily Hub** is a lightweight and modern dashboard that brings weather and news directly to your screen, making it perfect for in-home displays or as a daily companion on your computer.
 
 ## 🚀 Key Features
 
 - **🌤️ Real-Time Weather**: Get the latest weather information for your city with data from OpenWeatherMap.
 - **📰 Fresh News**: Stay updated with the latest news from your country, powered by NewsAPI.
-- **🎨 Modern Design**: A clean and responsive interface, formatted beautifully in the terminal using `rich`.
 - **⚡ Automatic Updates**: Data is fetched and displayed automatically, with no need for manual refreshes.
 - **🔧 Easy to Set Up**: Just clone the repository, install dependencies, and you're ready to go!
 
@@ -45,12 +44,12 @@ Follow these simple steps to get **Daily Hub** running on your machine:
 
 5. **View the Dashboard**:
    - The weather and news will be displayed in your terminal. Enjoy your new dashboard!
+     `http://127.0.0.1:5000/`
 
 ## 🎛️ Customization
 
 - **Change City**: Use the `--city` argument to get weather for a different city, e.g., `python main.py --city Milan`.
 - **Change Country for News**: Use the `--country` argument to get news from a different country, e.g., `python main.py --country us`.
-- **Style and Layout**: Modify the `rich` panels and formatting in `main.py` to customize the appearance.
 
 
 ## 🙏 Acknowledgments
