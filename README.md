@@ -30,7 +30,7 @@ Follow these simple steps to get **Daily Hub** running on your machine:
    ```
 
 3. **Set Up API Keys**:
-   - Rename `.env.example` to `.env`.
+   - Open the `.env` file.
    - Add your API keys for OpenWeatherMap and NewsAPI:
      ```env
      WEATHER_API_KEY=your_openweathermap_api_key
@@ -52,26 +52,6 @@ Follow these simple steps to get **Daily Hub** running on your machine:
 - **Change Country for News**: Use the `--country` argument to get news from a different country, e.g., `python main.py --country us`.
 - **Style and Layout**: Modify the `rich` panels and formatting in `main.py` to customize the appearance.
 
-## 🧑‍💻 Technologies Used
-
-- **Python**: The core language for the script.
-- **requests**: For making API calls to fetch weather and news data.
-- **python-dotenv**: For managing environment variables.
-- **rich**: For beautiful formatting in the terminal.
-
-## 🤝 Contribute
-
-Want to make **Daily Hub** even better? Great! Here's how you can contribute:
-
-1. **Fork the Repository**.
-2. **Create a Branch** for your feature (`git checkout -b feature/new-feature`).
-3. **Commit Your Changes** (`git commit -m 'Added new feature'`).
-4. **Push the Branch** (`git push origin feature/new-feature`).
-5. **Open a Pull Request**.
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## 🙏 Acknowledgments
 
