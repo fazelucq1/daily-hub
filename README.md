@@ -11,7 +11,8 @@
 
 ## 📸 Preview
 
-*(Add a screenshot of your dashboard here for a visual impact!)*
+![image](https://github.com/user-attachments/assets/abc5c75f-fa61-4b78-b3a2-94a1675f30be)
+
 
 ## 🛠️ Installation
 
